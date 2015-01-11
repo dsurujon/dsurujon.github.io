@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tm Calculator for Primer Sequences</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Tm Calculator for Primer Sequences">
+  <meta name="author" content="dsurujon">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Tm Calculator for Primer Sequences</h1>
+    <h2>A Shiny application</h2>
+    <p>dsurujon<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <!-- Limit image width and height -->
+
+<style type='text/css'>
+img {
+    max-height: 400px;
+    max-width: 964px;
+}
+</style>
+
+<h2>Polymerase Chain Reaction</h2>
+
+<ul>
+<li>Polymerase Chain Reaction (PCR) is a ubiquitous application of molecular biology where a very large number of copies of a DNA sequence can be generated in a relatively short amount of time. </li>
+<li>PCR requires a DNA template to be copied, molecules involved in DNA replication, and a pair of primers (short DNA sequences) that mark the beginning and the end of the region being amplified on the template. </li>
+<li>There are three critical temperatures in the PCR cycle: Denaturation, Annealing and Elongation. </li>
+<li>The denaturation and extension temperatures are almost always around 95C and 72C. The annealing temperature however needs to be customized depending on the primers being used. </li>
+<li>The annealing temperature is usually a couple of degrees lower than the melting temperature (Tm) of the primers. This ensures that the primers are binding the desired site on the template, and nowhere else (unspecific binding)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Annealing Temperature and Tm</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>It can sometimes be tricky to find the optimal annealing temperature for a given set of primers. </li>
+<li>The shiny app &quot;primer-tm&quot; which can be accessed <a href="https://dsurujon.shinyapps.io/primer-tm">here</a> calculates the melting temperature of a given pair of primers. </li>
+<li>The melting temperature is defined as the temperature at which 50% of the primer DNA is dissociated from its reverse complement strand. </li>
+<li>The melting temperature depends on several factors: 
+
+<ol>
+<li>The length of the primer sequences</li>
+<li>The abundance of each nucleotide (A, C, T, or G) in the sequence</li>
+<li>Concentration of ions and other molecules</li>
+</ol></li>
+</ul>
+
+<p><i>note: For the sake of simplicity, the Shiny app only considers the first two factors and assumes the ionic concentrations are constant.</i></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Example Calculation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>We calculate the Tm (in Celsius) as </p>
+
+<pre><code> 4x(number of G&#39;s and C&#39;s) + 2*(number of A&#39;s and T&#39;s)
+</code></pre>
+
+<p>for primers shorter than 14 nucleotides. For longer nucleotides, the calculation is as follows:</p>
+
+<pre><code> 64.9 + 41x((number of G&#39;s and C&#39;s)-16.4)/(length of primer)
+</code></pre>
+
+<pre><code class="r">myprimer &lt;- &quot;AGCTGATCGGATAAATCGAAG&quot;
+primer1A &lt;- nchar(gsub(&quot;[^a]&quot;,&quot;&quot;,myprimer))
+primer1T &lt;- nchar(gsub(&quot;[^t]&quot;,&quot;&quot;,myprimer))
+primer1G &lt;- nchar(gsub(&quot;[^g]&quot;,&quot;&quot;,myprimer))
+primer1C &lt;- nchar(gsub(&quot;[^c]&quot;,&quot;&quot;,myprimer))
+if (nchar(myprimer) &lt; 14) {T1 &lt;- 4*(primer1G + primer1C) + 2*(primer1A + primer1T)
+}else {T1 &lt;- 64.9 + 41 * (primer1G + primer1C - 16.4) / (nchar(myprimer))}
+print(T1)
+</code></pre>
+
+<pre><code>## [1] 32.88095
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Notes</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>-The shiny app valiates whether the entered sequence is a DNA sequence or not using the following snippet:</p>
+
+<pre><code class="r">#define valid bases
+bases&lt;-c(&quot;a&quot;,&quot;c&quot;,&quot;g&quot;,&quot;t&quot;)
+#convert to lowercase
+p1&lt;-tolower(input$primer1)
+#unique characters in the oligo sequence
+uniques1&lt;-unique(strsplit(p1,&quot;&quot;)[[1]])
+output$seq1&lt;-renderText({
+    if (input$goButton==0) &quot;&quot;
+    #check if the entered sequence is a valid DNA sequence
+    else if (all(lapply(uniques1,function (i) i %in% bases))) p1
+    else &quot;please enter a valid dna sequence&quot;})
+</code></pre>
+
+<p>-The calculations are based on <a href="https://www.promega.com/techserv/tools/biomath/calc11.htm">this website</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title=''>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Annealing Temperature and Tm'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Example Calculation'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Notes'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
