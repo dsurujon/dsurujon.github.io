@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Wall Mockup</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f6f0 0%, #e8e4d9 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #faf9f6;
+            padding: 60px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 28px;
+            color: #2c2c2c;
+            margin-bottom: 50px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .gallery-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            justify-items: center;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .artwork {
+            position: relative;
+            background: white;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .artwork:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .artwork img {
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .artwork-label {
+            position: absolute;
+            bottom: -35px;
+            left: 25px;
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Specific positioning for the arrangement */
+        .top-left { grid-column: 1; grid-row: 1; }
+        .top-center { grid-column: 2; grid-row: 1; }
+        .top-right { grid-column: 3; grid-row: 1; }
+        .bottom-left { grid-column: 1; grid-row: 2; margin-top: 20px; }
+        .bottom-center { grid-column: 2; grid-row: 2; margin-top: 20px; }
+        .bottom-right { grid-column: 3; grid-row: 2; margin-top: 20px; }
+
+        .curatorial-note {
+            background: #f5f3ef;
+            padding: 30px;
+            border-left: 4px solid #c4986b;
+            margin-top: 60px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .curatorial-note h3 {
+            margin-top: 0;
+            color: #2c2c2c;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .selection-reasoning {
+            background: white;
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .wall-specs {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <h1 class="gallery-title">Psyche Unveiled</h1>
+        
+        <div class="gallery-wall">
+            <!-- Top Row -->
+            <div class="artwork top-left">
+                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
+                    <img src="images/portraits/aaa.JPEG" alt="" />
+                </div>
+                <div class="artwork-label">It's just like the flu</div>
+            </div>
+            
+            <div class="artwork top-center">
+               <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
+                    <img src="images/portraits/head_1.JPEG" alt="" />
+                </div>
+                <div class="artwork-label">Forced introspection</div>
+            </div>
+            
+            <div class="artwork top-right">
+               <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
+                    <img src="images/portraits/portrait_2.JPEG" alt="" />
+                </div>
+                <div class="artwork-label">Breaking point</div>
+            </div>
+            
+            <!-- Bottom Row -->
+            <div class="artwork bottom-left">
+                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
+                    <img src="images/portraits/migraine_portrait_2.JPEG" alt="" />
+                </div>
+                <div class="artwork-label">Migraine</div>
+            </div>
+            
+            <div class="artwork bottom-center">
+                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
+                    <img src="images/portraits/abstract_face.JPEG" alt="" />
+                </div>
+                <div class="artwork-label">Embracing chaos</div>
+            </div>
+            
+            <div class="artwork bottom-right">
+                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
+                    <img src="images/portraits/portrait_1.JPEG" alt="" />
+                </div>
+                <div class="artwork-label">Thanks for being here</div>
+            </div>
+        </div>
+        
+
+        
+        <div class="curatorial-note">
+            <h3>Collection Description</h3>
+            
+            <div class="selection-reasoning">
+
+               <p style="font-size: 16px; line-height: 1.7; margin-bottom: 25px; font-style: italic; color: #555;">
+                    "Six snapshots from the pandemic years—when isolation forced us to confront what was really going on inside, and somehow we found ways to survive it together."
+                </p>
+                
+                <p><strong>Psyche Unveiled</strong> emerged from those strange, difficult years when the world turned inward. These paintings capture what it felt like to live through a time when everyone became potentially dangerous, when we were trapped with our own thoughts, and when mortality wasn't abstract anymore—it was right there, every day, on the news and in our nightmares.</p>
+                
+                <p>The journey starts with a scream—that first shock of realizing what the world had become. Notice the purple aura around the figure? That's the contamination zone we all learned to see around each other, the invisible bubble of fear that surrounded every human encounter. Then comes the explosion of being stuck alone with your thoughts, when isolation forces you to confront every anxiety and obsession you'd normally distract yourself from.</p>
+                
+                <p>The third piece might look like laughter, but look closer—there's a noose, there's pain, there's that moment when everything felt overwhelming and giving up seemed easier than fighting. But see how the hand pulls down on that rope? That's survival instinct kicking in, even when everything hurts. The fourth painting shows what comes after—the quiet, shell-shocked aftermath. It's about migraines that follow trauma, when the pain becomes so familiar it almost feels comforting.</p>
+                
+                <p>Then something shifts. The fifth piece breaks into something almost playful—an absurd scream or laugh that says "okay, if this is chaos, maybe I can dance with it instead of fighting it." It's that weird moment when you realize you can embrace the uncertainty instead of being destroyed by it.</p>
+                
+                <p>Finally, we arrive at direct eye contact—the first "real" human face in the series. After all the distortion and surreal elements, here's someone looking right at you. It's a thank you. An acknowledgment that you made it through something difficult, that you're here, paying attention to these deeply personal snapshots. The pandemic was isolating, but it was also something we all went through together. This last painting says: "Thank you for being here, for seeing me, for making this an exchange instead of just me talking to myself."</p>
+                
+                <h4 style="color: #c4986b; margin-top: 25px;">The Pandemic Journey:</h4>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li><strong>It's just like the flu:</strong> The scream—realizing everyone is potentially dangerous</li>
+                    <li><strong>Forced introspection:</strong> Overwhelmed by your own thoughts in isolation</li>
+                    <li><strong>Breaking point:</strong> When mortality feels too close and survival becomes a conscious choice</li>
+                    <li><strong>Migraine:</strong> The quiet aftermath, learning to live with pain</li>
+                    <li><strong>Embracing chaos:</strong> Finding humor and play in uncertainty</li>
+                    <li><strong>Thanks for being here:</strong> Direct acknowledgment—we survived this together</li>
+                </ul>
+        </div>
+    </div>
+</body>
+</html>
