@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psyche Unveiled - Art Collection</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f6f0 0%, #e8e4d9 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #faf9f6;
+            padding: 60px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 32px;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gallery-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            justify-items: center;
+            margin-bottom: 60px;
+        }
+
+        .artwork {
+            position: relative;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .artwork:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .artwork img {
+            width: 240px;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            border-radius: 2px;
+        }
+
+        .artwork-info {
+            padding: 15px 5px 5px 5px;
+            text-align: center;
+        }
+
+        .artwork-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 5px;
+        }
+
+        .artwork-description {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .description-section {
+            background: #f5f3ef;
+            padding: 40px;
+            border-left: 4px solid #c4986b;
+            margin-top: 40px;
+            border-radius: 4px;
+        }
+
+        .description-section h2 {
+            color: #2c2c2c;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .description-section p {
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .journey-list {
+            background: white;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .journey-list h3 {
+            color: #c4986b;
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .journey-list ul {
+            padding-left: 20px;
+        }
+
+        .journey-list li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lightbox-info {
+            text-align: center;
+            padding: 15px 0 5px 0;
+        }
+
+        .lightbox-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 5px;
+        }
+
+        .lightbox-description {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #666;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #2c2c2c;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Click hint */
+        .click-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .artwork:hover .click-hint {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                padding: 30px 20px;
+            }
+            
+            .gallery-wall {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .artwork img {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .description-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <h1 class="gallery-title">PSYCHE UNVEILED</h1>
+        <p class="gallery-subtitle">"Six snapshots from the pandemic years—when isolation forced us to confront what was really going on inside, and somehow we found ways to survive it together."</p>
+        
+        <div class="gallery-wall">
+            <div class="artwork" onclick="openLightbox('artwork1')">
+                <img src="images/portraits/shy.JPEG" alt="Shy">
+                <div class="artwork-info">
+                    <div class="artwork-title">Shy</div>
+                    <div class="artwork-description">Acrylics on canvas, 2023</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork2')">
+                <img src="images/portraits/frustration.JPEG" alt="Frustration">
+                <div class="artwork-info">
+                    <div class="artwork-title">Frustration</div>
+                    <div class="artwork-description">Acrylics on cardboard, 2021</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork3')">
+                <img src="images/portraits/against_the_wind.JPEG" alt="Against the Wind">
+                <div class="artwork-info">
+                    <div class="artwork-title">Against the Wind</div>
+                    <div class="artwork-description">Acrylics and watercolor on paper, 2024</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork4')">
+                <img src="images/portraits/first_bloom.JPEG" alt="First Bloom">
+                <div class="artwork-info">
+                    <div class="artwork-title">First Bloom</div>
+                    <div class="artwork-description">Mixed media on cardboard, 2022</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork5')">
+                <img src="images/portraits/vessel.JPEG" alt="Vessel">
+                <div class="artwork-info">
+                    <div class="artwork-title">Vessel</div>
+                    <div class="artwork-description">Colored pencil on paper, 2022</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork6')">
+                <img src="images/portraits/hmmm.JPEG" alt="Hmmm">
+                <div class="artwork-info">
+                    <div class="artwork-title">Hmmm</div>
+                    <div class="artwork-description">Acrylics on paper, 2021</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+
+            <div class="artwork" onclick="openLightbox('artwork7')">
+                <img src="images/portraits/knowledge_transfer.JPEG" alt="Knowledge Transfer">
+                <div class="artwork-info">
+                    <div class="artwork-title">Knowledge Transfer</div>
+                    <div class="artwork-description">Acrylics on paper, 2022</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+
+            <div class="artwork" onclick="openLightbox('artwork8')">
+                <img src="images/portraits/laureate.JPEG" alt="Laureate">
+                <div class="artwork-info">
+                    <div class="artwork-title">Laureate</div>
+                    <div class="artwork-description">Acrylics on paper, 2023</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+
+            <div class="artwork" onclick="openLightbox('artwork9')">
+                <img src="images/portraits/retreat.JPEG" alt="Retreat">
+                <div class="artwork-info">
+                    <div class="artwork-title">Retreat</div>
+                    <div class="artwork-description">Acrylics on cardboard, 2021</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+
+        </div>
+
+        <div class="description-section">
+            <h2>About the Collection</h2>
+
+            <p><strong>Still. Life.</strong> is an emotional and intellectual passage through concealment, struggle, growth, and eventual retreat — not in defeat, but in fulfillment. This series of nine mixed-media portraits is a spiraling reflection on identity, shaped by pressure, time, and cycles of blooming and withering.</p>
+
+            <p>The journey begins in withdrawal: a reclining figure leans back, face obscured by their own body — a literal refusal of the gaze. The viewer is kept at a distance. In the next painting, a hand rests atop a bowed head, gently hiding it from us, both shielding and claiming. Then, in a gust of wind, a woman’s eyes are obscured by her own hair and scarf — movement without freedom. These early portraits are not about visibility but resistance: of being seen, of being defined, of being fixed.</p>
+
+            <p>But this resistance softens. The fourth painting offers a still, blue pause — a quiet figure in contemplation, where a small flower begins to bloom. This moment marks a shift in the emotional atmosphere. Here, a sense of self begins to emerge — not boldly, but tentatively, and only partially. What follows is a study in symbolic maturity.</p>
+
+            <p>The fifth work, drawn in colored pencil, shows us a full face at last. But it’s hollow, vessel-like — more like a ceramic planter than a living person. The sixth painting introduces levity: a skeleton in thought, surrounded by greenery, contemplative and wry. Growth, now literal, has entered the frame. From here, botanical motifs take over.</p>
+
+            <p>In the seventh piece, a headless figure cradles a thriving plant, while a dry, twisted tree trunk emerges from the neck. The subject is no longer the seeker, but the mentor — the one who supports, who cultivates others. It’s an allegory of scientific work, where one’s labor often blooms most beautifully in someone else’s hands.</p>
+
+            <p>The eighth painting is ceremonial: a crowned skull, regal and still, silent but radiant with achievement. And finally, we end in shadow — a heavily textured portrait with a flower on the head, receding into darkness. It is not a disappearance, but a chosen retreat, having left a legacy behind. The occlusion returns, but now it carries grace.</p>
+
+            <p>Each piece in Still. Life. grapples with identity through what is seen and hidden, held and released. Faces disappear, reappear, and dissolve again — not to suggest loss, but to honor the transience of all selves: the apprentice, the thinker, the teacher, the witness. The still life, here, is not just an object of contemplation — it is a life that pauses long enough to be seen.</p>
+            <div class="journey-list">
+                <h3>The Scientific Journey:</h3>
+                <ul>
+                    <li><strong>Shy:</strong> A bald figure reclines with their face hidden by their own body — a quiet rebellion against being witnessed.</li>
+                    <li><strong>Frustration:</strong> Overwhelmed by your own thoughts in isolation</li>
+                    <li><strong>Against the Wind:</strong> Facing the wind, trying to move forward, but held back</li>
+                    <li><strong>First Bloom:</strong> A pale figure sits still against blue, a single rose emerging — a fragile moment of transformation.</li>
+                    <li><strong>Vessel:</strong> A hollow-eyed face rendered in pencil appears more artifact than person</li>
+                    <li><strong>Hmmm:</strong> A skeletal thinker, surrounded by foliage, leans into quiet contemplation with unexpected warmth.</li>
+                    <li><strong>Knowledge Transfer:</strong> A headless figure grows a dry trunk from the neck while nurturing a thriving plant in hand.</li>
+                    <li><strong>Laureate:</strong> A skull adorned with a floral crown sits in stillness — honored, silenced, and complete.</li>
+                    <li><strong>Retreat:</strong> A darkened figure, flower-topped and fading into shadow, withdraws from view — no longer to be seen, but remembered.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeLightbox()">&times;</span>
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <div id="lightbox-title" class="lightbox-title"></div>
+                <div id="lightbox-description" class="lightbox-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Artwork data with high-resolution image paths
+        const artworks = {
+            'artwork1': {
+                title: 'Shy',
+                description: 'Acrylics on canvas, 2023',
+                // Replace with your actual high-res image path
+                highResImage: 'images/still_life/shy.JPEG'
+            },
+            'artwork2': {
+                title: 'Frustration',
+                description: 'Acrylics on cardboard, 2021',
+                highResImage: 'images/still_life/frustration.JPEG'
+            },
+            'artwork3': {
+                title: 'Against the Wind',
+                description: 'Acrylics and watercolor on paper, 2024',
+                highResImage: 'images/still_life/against_the_wind.JPEG'
+            },
+            'artwork4': {
+                title: 'First Bloom',
+                description: 'Mixed media on cardboard, 2022',
+                highResImage: 'images/still_life/first_bloom.JPEG'
+            },
+            'artwork5': {
+                title: 'Vessel',
+                description: 'Colored pencil on paper, 2022',
+                highResImage: 'images/still_life/vessel.JPEG'
+            },
+            'artwork6': {
+                title: 'Hmmm',
+                description: 'Acrylics on paper, 2021',
+                highResImage: 'images/still_life/hmmm.JPEG'
+            },
+            'artwork7': {
+                title: 'Knowledge Transfer',
+                description: 'Acrylics on paper, 2022',
+                highResImage: 'images/still_life/knowledge_transfer.JPEG'
+            },
+            'artwork8': {
+                title: 'Laureate',
+                description: 'Acrylics on paper, 2023',
+                highResImage: 'images/still_life/laureate.JPEG'
+            },
+            'artwork9': {
+                title: 'Retreat',
+                description: 'Acrylics on cardboard, 2021',
+                highResImage: 'images/still_life/retreat.JPEG'
+            }
+        };
+
+        function openLightbox(artworkId) {
+            const artwork = artworks[artworkId];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDescription = document.getElementById('lightbox-description');
+
+            // Set the high-resolution image and info
+            lightboxImage.src = artwork.highResImage;
+            lightboxImage.alt = artwork.title;
+            lightboxTitle.textContent = artwork.title;
+            lightboxDescription.textContent = artwork.description;
+
+            // Show lightbox
+            lightbox.classList.add('active');
+            
+            // Prevent body scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Handle image loading errors - fallback to placeholder
+        document.getElementById('lightbox-image').addEventListener('error', function() {
+            // If high-res image fails to load, you could fallback to the thumbnail
+            console.log('High-res image failed to load');
+        });
+    </script>
+</body>
+</html>
