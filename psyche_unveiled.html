@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collection: Psyche Unveiled</title>
+    <title>Psyche Unveiled - Art Collection</title>
     <style>
         body {
             margin: 0;
@@ -11,6 +11,7 @@
             background: linear-gradient(135deg, #f8f6f0 0%, #e8e4d9 100%);
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
+            line-height: 1.6;
         }
 
         .gallery-container {
@@ -24,29 +25,40 @@
 
         .gallery-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 32px;
             color: #2c2c2c;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             font-weight: 300;
             letter-spacing: 2px;
         }
 
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .gallery-wall {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
             justify-items: center;
-            align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .artwork {
             position: relative;
             background: white;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 2px;
+            cursor: pointer;
         }
 
         .artwork:hover {
@@ -55,144 +67,363 @@
         }
 
         .artwork img {
-            width: 220px;
-            height: 280px;
+            width: 240px;
+            height: 300px;
             object-fit: cover;
             display: block;
+            border-radius: 2px;
         }
 
-        .artwork-label {
-            position: absolute;
-            bottom: -35px;
-            left: 25px;
+        .artwork-info {
+            padding: 15px 5px 5px 5px;
+            text-align: center;
+        }
+
+        .artwork-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 5px;
+        }
+
+        .artwork-description {
             font-size: 12px;
             color: #666;
             font-style: italic;
         }
 
-        /* Specific positioning for the arrangement */
-        .top-left { grid-column: 1; grid-row: 1; }
-        .top-center { grid-column: 2; grid-row: 1; }
-        .top-right { grid-column: 3; grid-row: 1; }
-        .bottom-left { grid-column: 1; grid-row: 2; margin-top: 20px; }
-        .bottom-center { grid-column: 2; grid-row: 2; margin-top: 20px; }
-        .bottom-right { grid-column: 3; grid-row: 2; margin-top: 20px; }
-
-        .curatorial-note {
+        .description-section {
             background: #f5f3ef;
-            padding: 30px;
+            padding: 40px;
             border-left: 4px solid #c4986b;
-            margin-top: 60px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #444;
+            margin-top: 40px;
+            border-radius: 4px;
         }
 
-        .curatorial-note h3 {
-            margin-top: 0;
+        .description-section h2 {
             color: #2c2c2c;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
-        .selection-reasoning {
+        .description-section p {
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .journey-list {
             background: white;
             padding: 25px;
-            margin-top: 30px;
+            margin: 25px 0;
             border-radius: 4px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .wall-specs {
+        .journey-list h3 {
+            color: #c4986b;
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .journey-list ul {
+            padding-left: 20px;
+        }
+
+        .journey-list li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lightbox-info {
             text-align: center;
-            font-size: 12px;
-            color: #888;
-            margin-top: 20px;
+            padding: 15px 0 5px 0;
+        }
+
+        .lightbox-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 5px;
+        }
+
+        .lightbox-description {
+            font-size: 14px;
+            color: #666;
             font-style: italic;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #666;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #2c2c2c;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Click hint */
+        .click-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .artwork:hover .click-hint {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                padding: 30px 20px;
+            }
+            
+            .gallery-wall {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .artwork img {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .description-section {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="gallery-container">
-        <h1 class="gallery-title">Psyche Unveiled</h1>
+        <h1 class="gallery-title">PSYCHE UNVEILED</h1>
+        <p class="gallery-subtitle">"Six snapshots from the pandemic years—when isolation forced us to confront what was really going on inside, and somehow we found ways to survive it together."</p>
         
         <div class="gallery-wall">
-            <!-- Top Row -->
-            <div class="artwork top-left">
-                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
-                    <img src="images/portraits/aaa.JPEG" alt="" />
+            <div class="artwork" onclick="openLightbox('artwork1')">
+                <img src="images/portraits/aaa.JPEG" alt="Initial Shock">
+                <div class="artwork-info">
+                    <div class="artwork-title">Initial Shock</div>
+                    <div class="artwork-description">Acrylics, collage on cardboard</div>
                 </div>
-                <div class="artwork-label">It's just like the flu</div>
+                <div class="click-hint">Click to enlarge</div>
             </div>
             
-            <div class="artwork top-center">
-               <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
-                    <img src="images/portraits/head_1.JPEG" alt="" />
+            <div class="artwork" onclick="openLightbox('artwork2')">
+                <img src="images/portraits/head_1.JPEG" alt="Forced Introspection">
+                <div class="artwork-info">
+                    <div class="artwork-title">Forced Introspection</div>
+                    <div class="artwork-description">Acrylics on canvas, 2021</div>
                 </div>
-                <div class="artwork-label">Forced introspection</div>
+                <div class="click-hint">Click to enlarge</div>
             </div>
             
-            <div class="artwork top-right">
-               <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
-                    <img src="images/portraits/portrait_2.JPEG" alt="" />
+            <div class="artwork" onclick="openLightbox('artwork3')">
+                <img src="images/portraits/portrait_2.JPEG" alt="Crisis Point">
+                <div class="artwork-info">
+                    <div class="artwork-title">Crisis Point</div>
+                    <div class="artwork-description">Acrylics on paper, 2021</div>
                 </div>
-                <div class="artwork-label">Breaking point</div>
+                <div class="click-hint">Click to enlarge</div>
             </div>
             
-            <!-- Bottom Row -->
-            <div class="artwork bottom-left">
-                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
-                    <img src="images/portraits/migraine_portrait_2.JPEG" alt="" />
+            <div class="artwork" onclick="openLightbox('artwork4')">
+                <img src="images/portraits/migraine_portrait_2.JPEG" alt="Migraine">
+                <div class="artwork-info">
+                    <div class="artwork-title">Migraine</div>
+                    <div class="artwork-description">Acrylics on canvas, 2022</div>
                 </div>
-                <div class="artwork-label">Migraine</div>
+                <div class="click-hint">Acrylics on canvas, 2022</div>
             </div>
             
-            <div class="artwork bottom-center">
-                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
-                    <img src="images/portraits/abstract_face.JPEG" alt="" />
+            <div class="artwork" onclick="openLightbox('artwork5')">
+                <img src="images/portraits/abstract_face.JPEG" alt="Embracing Chaos">
+                <div class="artwork-info">
+                    <div class="artwork-title">Embracing Chaos</div>
+                    <div class="artwork-description">Acrylics and watercolors on cardboard, 2022</div>
                 </div>
-                <div class="artwork-label">Embracing chaos</div>
+                <div class="click-hint">Click to enlarge</div>
             </div>
             
-            <div class="artwork bottom-right">
-                <div style="width: 220px; height: 280px;  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center;">
-                    <img src="images/portraits/portrait_1.JPEG" alt="" />
+            <div class="artwork" onclick="openLightbox('artwork6')">
+                <img src="images/portraits/portrait_1.JPEG" alt="Direct Gaze">
+                <div class="artwork-info">
+                    <div class="artwork-title">Direct Gaze</div>
+                    <div class="artwork-description">Acrylics on paper, 2021</div>
                 </div>
-                <div class="artwork-label">Thanks for being here</div>
+                <div class="click-hint">Click to enlarge</div>
             </div>
         </div>
-        
 
-        
-        <div class="curatorial-note">
-            <h3>Collection Description</h3>
+        <div class="description-section">
+            <h2>About the Collection</h2>
+            <p><strong>Psyche Unveiled</strong> emerged from those strange, difficult years when the world turned inward. These paintings capture what it felt like to live through a time when everyone became potentially dangerous, when we were trapped with our own thoughts, and when mortality wasn't abstract anymore—it was right there, every day, on the news and in our nightmares.</p>
             
-            <div class="selection-reasoning">
+            <p>The journey starts with a scream—that first shock of realizing what the world had become. Notice the purple aura around the figure? That's the contamination zone we all learned to see around each other, the invisible bubble of fear that surrounded every human encounter. Then comes the explosion of being stuck alone with your thoughts, when isolation forces you to confront every anxiety and obsession you'd normally distract yourself from.</p>
+            
+            <p>The third piece might look like laughter, but look closer—there's a noose, there's pain, there's that moment when everything felt overwhelming and giving up seemed easier than fighting. But see how the hand pulls down on that rope? That's survival instinct kicking in, even when everything hurts. The fourth painting shows what comes after—the quiet, shell-shocked aftermath. It's about migraines that follow trauma, when the pain becomes so familiar it almost feels comforting.</p>
+            
+            <p>Then something shifts. The fifth piece breaks into something almost playful—an absurd scream or laugh that says "okay, if this is chaos, maybe I can dance with it instead of fighting it." It's that weird moment when you realize you can embrace the uncertainty instead of being destroyed by it.</p>
+            
+            <p>Finally, we arrive at direct eye contact—the first "real" human face in the series. After all the distortion and surreal elements, here's someone looking right at you. It's a thank you. An acknowledgment that you made it through something difficult, that you're here, paying attention to these deeply personal snapshots. The pandemic was isolating, but it was also something we all went through together. This last painting says: "Thank you for being here, for seeing me, for making this an exchange instead of just me talking to myself."</p>
 
-               <p style="font-size: 16px; line-height: 1.7; margin-bottom: 25px; font-style: italic; color: #555;">
-                    "Six snapshots from the pandemic years—when isolation forced us to confront what was really going on inside, and somehow we found ways to survive it together."
-                </p>
-                
-                <p><strong>Psyche Unveiled</strong> emerged from those strange, difficult years when the world turned inward. These paintings capture what it felt like to live through a time when everyone became potentially dangerous, when we were trapped with our own thoughts, and when mortality wasn't abstract anymore—it was right there, every day, on the news and in our nightmares.</p>
-                
-                <p>The journey starts with a scream—that first shock of realizing what the world had become. Notice the purple aura around the figure? That's the contamination zone we all learned to see around each other, the invisible bubble of fear that surrounded every human encounter. Then comes the explosion of being stuck alone with your thoughts, when isolation forces you to confront every anxiety and obsession you'd normally distract yourself from.</p>
-                
-                <p>The third piece might look like laughter, but look closer—there's a noose, there's pain, there's that moment when everything felt overwhelming and giving up seemed easier than fighting. But see how the hand pulls down on that rope? That's survival instinct kicking in, even when everything hurts. The fourth painting shows what comes after—the quiet, shell-shocked aftermath. It's about migraines that follow trauma, when the pain becomes so familiar it almost feels comforting.</p>
-                
-                <p>Then something shifts. The fifth piece breaks into something almost playful—an absurd scream or laugh that says "okay, if this is chaos, maybe I can dance with it instead of fighting it." It's that weird moment when you realize you can embrace the uncertainty instead of being destroyed by it.</p>
-                
-                <p>Finally, we arrive at direct eye contact—the first "real" human face in the series. After all the distortion and surreal elements, here's someone looking right at you. It's a thank you. An acknowledgment that you made it through something difficult, that you're here, paying attention to these deeply personal snapshots. The pandemic was isolating, but it was also something we all went through together. This last painting says: "Thank you for being here, for seeing me, for making this an exchange instead of just me talking to myself."</p>
-                
-                <h4 style="color: #c4986b; margin-top: 25px;">The Pandemic Journey:</h4>
-                <ul style="margin: 15px 0; padding-left: 20px;">
-                    <li><strong>It's just like the flu:</strong> The scream—realizing everyone is potentially dangerous</li>
-                    <li><strong>Forced introspection:</strong> Overwhelmed by your own thoughts in isolation</li>
-                    <li><strong>Breaking point:</strong> When mortality feels too close and survival becomes a conscious choice</li>
+            <div class="journey-list">
+                <h3>The Pandemic Journey:</h3>
+                <ul>
+                    <li><strong>Initial Shock:</strong> The scream—realizing everyone is potentially dangerous</li>
+                    <li><strong>Forced Introspection:</strong> Overwhelmed by your own thoughts in isolation</li>
+                    <li><strong>Crisis Point:</strong> When mortality feels too close and survival becomes a conscious choice</li>
                     <li><strong>Migraine:</strong> The quiet aftermath, learning to live with pain</li>
-                    <li><strong>Embracing chaos:</strong> Finding humor and play in uncertainty</li>
-                    <li><strong>Thanks for being here:</strong> Direct acknowledgment—we survived this together</li>
+                    <li><strong>Embracing Chaos:</strong> Finding humor and play in uncertainty</li>
+                    <li><strong>Direct Gaze:</strong> Direct acknowledgment—we survived this together</li>
                 </ul>
+            </div>
         </div>
     </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeLightbox()">&times;</span>
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <div id="lightbox-title" class="lightbox-title"></div>
+                <div id="lightbox-description" class="lightbox-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Artwork data with high-resolution image paths
+        const artworks = {
+            'artwork1': {
+                title: 'The Scream',
+                description: 'Purple aura of contamination - The first shock of realizing what the world had become',
+                // Replace with your actual high-res image path
+                highResImage: 'images/portraits/aaa.JPEG'
+            },
+            'artwork2': {
+                title: 'Explosive Mind',
+                description: 'Overwhelmed by isolation - When forced introspection becomes overwhelming',
+                highResImage: 'images/portraits/head_1.JPEG'
+            },
+            'artwork3': {
+                title: 'Survival Instinct',
+                description: 'Fighting against giving up - The moment when survival becomes a conscious choice',
+                highResImage: 'images/portraits/portrait_2.JPEG'
+            },
+            'artwork4': {
+                title: 'Migraine Aftermath',
+                description: 'When pain becomes familiar - The quiet aftermath of trauma',
+                highResImage: 'images/portraits/migraine_portrait_2.JPEG'
+            },
+            'artwork5': {
+                title: 'Embracing Chaos',
+                description: 'Acrylics and watercolors on cardboard, 2022',
+                highResImage: 'images/portraits/abstract_face.JPEG'
+            },
+            'artwork6': {
+                title: 'Direct Gaze',
+                description: 'Acrylics on paper, 2021',
+                highResImage: 'images/portraits/portrait_1.JPEG'
+            }
+        };
+
+        function openLightbox(artworkId) {
+            const artwork = artworks[artworkId];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDescription = document.getElementById('lightbox-description');
+
+            // Set the high-resolution image and info
+            lightboxImage.src = artwork.highResImage;
+            lightboxImage.alt = artwork.title;
+            lightboxTitle.textContent = artwork.title;
+            lightboxDescription.textContent = artwork.description;
+
+            // Show lightbox
+            lightbox.classList.add('active');
+            
+            // Prevent body scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Handle image loading errors - fallback to placeholder
+        document.getElementById('lightbox-image').addEventListener('error', function() {
+            // If high-res image fails to load, you could fallback to the thumbnail
+            console.log('High-res image failed to load');
+        });
+    </script>
 </body>
 </html>
