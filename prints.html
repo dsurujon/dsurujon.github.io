@@ -78,36 +78,42 @@
 
 <script src="assets/js/lightbox.js"></script>
 
-<h2>Order Form</h2>
-<form action="https://formspree.io/f/mblrweer" method="POST" name="order_form">
-<label for="name">Name:</label><br>
-<input type="text" id="name" name="name" required><br><br>
+<div class="order-form" id="order-form">
+
+<section class="prints-form-section">
+  <h2>Order Prints</h2>
+  <p>All prints are A4 size and priced at $15 each. Shipping within the U.S. is free. International shipping arranged with buyer. Payment via Venmo.</p>
+  
+    <form action="https://formspree.io/f/mblrweer" method="POST" name="order_form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
 
 
-<label for="email">Email:</label><br>
-<input type="email" id="email" name="email" required><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
 
 
-<label for="print">List print(s) and quantity:</label><br>
-<input type="text" id="print" name="print" placeholder="List titles and how many copies of each you'd like" required><br><br>
+    <label for="print">List print(s) and quantity:</label>
+    <input type="text" id="print" name="print" placeholder="List titles and how many copies of each you'd like" required>
 
 
-<label for="address">Shipping Address:</label><br>
-<textarea id="address" name="address" rows="3" required></textarea><br><br>
+    <label for="address">Shipping Address:</label>
+    <textarea id="address" name="address" rows="3" required></textarea>
 
 
-<label for="message">Additional Notes (optional):</label><br>
-<textarea id="message" name="message" rows="3"></textarea><br><br>
+    <label for="message">Additional Notes (optional):</label>
+    <textarea id="message" name="message" rows="3"></textarea>
 
 
-<button type="submit">Submit Order</button>
-</form>
+    <button type="submit">Submit Order</button>
+    </form>
 
 
-<p><em>Thank you for your order. You will receive an email with payment information shortly.</em></p>
+    <p><em>Thank you for your order. You will receive an email with payment instructions shortly.</em></p>
 
+</section>
+</div>
 
-<p><a href="index.html">Back to Home</a></p>
 </div>
 </body>
 </html>
