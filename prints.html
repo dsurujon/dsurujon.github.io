@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prints for Sale</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<h1>Prints for Sale</h1>
+<p>A4 size prints available for <strong>$15</strong> each.<br>
+Free shipping within the U.S. — international shipping available upon request.<br>
+Payment via <strong>Venmo</strong> (details sent after order confirmation).</p>
+
+
+<h2>Available Prints</h2>
+<div class="gallery">
+<img src="images/still_life/knowledge_transfer.jpg" alt="Knowledge Transfer">
+<img src="images/golden_landscape.jpg" alt="Golden Landscape">
+<img src="images/finished_pieces_draft/tree.jpg" alt="Tree">
+<img src="images/portraits/looking_back.jpg" alt="Looking Back">
+<img src="images/portraits/head_1.jpg" alt="Forced Introspection">
+</div>
+
+
+<h2>Order Form</h2>
+<form action="https://formspree.io/f/mblrweer" method="POST" name="order_form">
+<label for="name">Name:</label><br>
+<input type="text" id="name" name="name" required><br><br>
+
+
+<label for="email">Email:</label><br>
+<input type="email" id="email" name="email" required><br><br>
+
+
+<label for="print">List print(s) and quantity:</label><br>
+<input type="text" id="print" name="print" placeholder="List titles and how many copies of each you'd like" required><br><br>
+
+
+<label for="address">Shipping Address:</label><br>
+<textarea id="address" name="address" rows="3" required></textarea><br><br>
+
+
+<label for="message">Additional Notes (optional):</label><br>
+<textarea id="message" name="message" rows="3"></textarea><br><br>
+
+
+<button type="submit">Submit Order</button>
+</form>
+
+
+<p><em>Thank you for your order. You will receive an email with payment information shortly.</em></p>
+
+
+<p><a href="index.html">Back to Home</a></p>
+</div>
+</body>
+</html>
