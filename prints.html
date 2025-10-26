@@ -93,16 +93,18 @@
   <p>All prints are A4 size and priced at $15 each. Shipping within the U.S. is free. International shipping arranged with buyer. Payment via Venmo.</p>
   
     <form action="https://formspree.io/f/mblrweer" method="POST" name="order_form">
-    <label for="name">Name:</label>
+    <label for="name">Name (required):</label>
     <input type="text" id="name" name="name" required>
 
 
-    <label for="email">Email:</label>
+    <label for="email">Email (required):</label>
     <input type="email" id="email" name="email" required>
 
+    <label for="venmo">Venmo Username (optional):</label>
+    <input type="text" id="venmo" name="venmo" placeholder="So I can send you a Venmo request">
 
-    <label for="print">List print(s) and quantity:</label>
-    <input type="text" id="print" name="print" placeholder="List titles and how many copies of each you'd like" required>
+    <label for="print">List print(s) and quantity (required):</label>
+    <input type="text" id="print" name="print" rows="3" placeholder="List titles and how many copies of each you'd like" required>
 
 
     <label for="address">Shipping Address:</label>
