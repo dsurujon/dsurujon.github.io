@@ -45,6 +45,12 @@
             margin-bottom: 60px;
         }
 
+        .stickers {
+
+            justify-items: center;
+            margin-bottom: 60px;
+        }
+
         .artwork {
             position: relative;
             background: white;
