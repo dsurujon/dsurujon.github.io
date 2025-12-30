@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nemo</title>
+    <link rel="stylesheet" href="assets/css/gallery.css" />
+
+</head>
+<body>
+    <div class="gallery-container">
+        <h1 class="gallery-title">Raccoons</h1>
+        <p class="gallery-subtitle">Some silly little friends</p>
+        
+        <div class="gallery-wall">
+            <div class="artwork" onclick="openLightbox('artwork1')">
+                <img src="images/animals/raccoon/raccoon.JPEG" alt="Hands up">
+                <div class="artwork-info">
+                    <div class="artwork-title">Hands up</div>
+                    <div class="artwork-description">Acrylics on paper</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork2')">
+                <img src="images/animals/raccoon/round_raccoon.JPEG" alt="Orb">
+                <div class="artwork-info">
+                    <div class="artwork-title">Orb</div>
+                    <div class="artwork-description">Acrylics on canvas</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork3')">
+                <img src="images/animals/raccoon/raccoon_3.JPEG" alt="Wes Andersen Raccoon">
+                <div class="artwork-info">
+                    <div class="artwork-title">Wes Andersen Racoon</div>
+                    <div class="artwork-description">Acrylics on paper</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork4')">
+                <img src="images/animals/raccoon/thug_life.png" alt="Thug Life">
+                <div class="artwork-info">
+                    <div class="artwork-title">Thug Life</div>
+                    <div class="artwork-description">Watercolors on paper</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork5')">
+                <img src="images/animals/raccoon/hand.JPEG" alt="Begging">
+                <div class="artwork-info">
+                    <div class="artwork-title">Begging</div>
+                    <div class="artwork-description">Acrylics on paper</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+            
+            <div class="artwork" onclick="openLightbox('artwork6')">
+                <img src="images/animals/raccoon/shy_raccoon.JPEG" alt="Shy raccoon">
+                <div class="artwork-info">
+                    <div class="artwork-title">Shy raccooon</div>
+                    <div class="artwork-description">Acrylics on paper</div>
+                </div>
+                <div class="click-hint">Click to enlarge</div>
+            </div>
+
+
+        </div>
+
+        <div class="description-section">
+            <h2>About the Collection</h2>
+
+            <p> Nothing too serious or fancy here, just some quick sketches and paintings of raccoons I did for fun.
+                 </p>
+
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeLightbox()">&times;</span>
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <div id="lightbox-title" class="lightbox-title"></div>
+                <div id="lightbox-description" class="lightbox-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Artwork data with high-resolution image paths
+        const artworks = {
+            'artwork1': {
+                title: 'Hands up',
+                description: 'Acrylics on paper - currently on display at JP Licks Newton',
+                highResImage: 'images/animals/raccoon/raccoon.JPEG'
+            },
+            'artwork2': {
+                title: 'Orb',
+                description: 'Acrylics on canvas',
+                highResImage: 'images/animals/raccoon/round_raccoon.JPEG'
+            },
+            'artwork3': {
+                title: 'Wes Andersen Racoon',
+                description: 'Acrylics on paper - part of a private collection, Brookline MA',
+                highResImage: 'images/animals/raccoon/raccoon_3.JPEG'
+            },
+            'artwork4': {
+                title: 'Thug Life',
+                description: 'Watercolors on paper',
+                highResImage: 'images/animals/raccoon/thug_life.png'
+            },
+            'artwork5': {
+                title: 'Begging',
+                description: 'Acrylics on paper',
+                highResImage: 'images/animals/raccoon/hand.JPEG'
+            },
+            'artwork6': {
+                title: 'Greenies - intensified',
+                description: 'Acrylics on paper',
+                highResImage: 'images/animals/raccoon/shy_raccoon.JPEG'
+            }
+
+        };
+
+        function openLightbox(artworkId) {
+            const artwork = artworks[artworkId];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDescription = document.getElementById('lightbox-description');
+
+            // Set the high-resolution image and info
+            lightboxImage.src = artwork.highResImage;
+            lightboxImage.alt = artwork.title;
+            lightboxTitle.textContent = artwork.title;
+            lightboxDescription.textContent = artwork.description;
+
+            // Show lightbox
+            lightbox.classList.add('active');
+            
+            // Prevent body scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Handle image loading errors - fallback to placeholder
+        document.getElementById('lightbox-image').addEventListener('error', function() {
+            // If high-res image fails to load, you could fallback to the thumbnail
+            console.log('High-res image failed to load');
+        });
+    </script>
+</body>
+</html>
