@@ -1,0 +1,70 @@
+body {
+  font-family: system-ui, sans-serif;
+  padding: 40px;
+  background: linear-gradient(135deg, #f8f6f0 0%, #e8e4d9 100%);
+  font-family: 'Arial', sans-serif;
+  margin: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+p {
+  margin: 0.5rem 0;
+  width: 80%;
+}
+
+
+header h1 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.tags a {
+  margin-right: 0.5rem;
+  opacity: 0.6;
+}
+
+.tags a.active {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.count {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.thumb img {
+  width: 100%;
+  display: block;
+}
+
+.caption {
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.full {
+  max-width: 80%;
+  margin: 1rem 0;
+  border-width: 2rem; 
+  border-color: black;
+  border-style: solid;
+  align-items: center;;
+}
+
+.full img {
+  border-radius: 8px; 
+  border-color: black;
+
+}
